@@ -46,6 +46,7 @@ namespace NeonShooter {
                 Exit();
 
             EntityManager.Update();
+            EnemySpawner.Update();
 
             base.Update(gameTime);
         }

@@ -34,6 +34,7 @@ namespace NeonShooter {
 
         public void Kill() {
             framesUntilRespawn = 60;
+            EnemySpawner.Reset();
         }
 
         // UPDATE & DRAW
