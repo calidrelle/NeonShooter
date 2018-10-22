@@ -15,6 +15,8 @@ namespace NeonShooter {
             Radius = 8;
         }
 
+        // UPDATE & DRAW
+
         public override void Update() {
             if (Velocity.LengthSquared() > 0)
                 Orientation = Velocity.ToAngle();

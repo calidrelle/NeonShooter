@@ -24,6 +24,8 @@ namespace NeonShooter {
             }
         }
 
+        // UPDATE & DRAW
+
         public abstract void Update();
 
         public virtual void Draw(SpriteBatch spriteBatch) {

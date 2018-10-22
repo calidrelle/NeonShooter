@@ -16,23 +16,6 @@ namespace NeonShooter {
 
         public static Vector2 MousePosition { get { return new Vector2(mouseState.X, mouseState.Y); } }
 
-        public static void Update() {
-            lastKeyboardState = keyboardState;
-            lastMouseState = mouseState;
-            lastGamepadState = gamepadState;
-
-            keyboardState = Keyboard.GetState();
-            mouseState = Mouse.GetState();
-            gamepadState = GamePad.GetState(PlayerIndex.One);
-
-            // If the player pressed one of the arrow keys or is using a gamepad to aim, we want to disable mouse aiming. Otherwise,
-            // if the player moves the mouse, enable mouse aiming.
-            if (new[] { Keys.Left, Keys.Right, Keys.Up, Keys.Down }.Any(x => keyboardState.IsKeyDown(x)) || gamepadState.ThumbSticks.Right != Vector2.Zero)
-                isAimingWithMouse = false;
-            else if (MousePosition != new Vector2(lastMouseState.X, lastMouseState.Y))
-                isAimingWithMouse = true;
-        }
-
         // Checks if a key was just pressed down
         public static bool WasKeyPressed(Keys key) {
             return lastKeyboardState.IsKeyUp(key) && keyboardState.IsKeyDown(key);
@@ -97,6 +80,25 @@ namespace NeonShooter {
 
         public static bool WasBombButtonPressed() {
             return WasButtonPressed(Buttons.LeftTrigger) || WasButtonPressed(Buttons.RightTrigger) || WasKeyPressed(Keys.Space);
+        }
+
+        // UPDATE & DRAW
+
+        public static void Update() {
+            lastKeyboardState = keyboardState;
+            lastMouseState = mouseState;
+            lastGamepadState = gamepadState;
+
+            keyboardState = Keyboard.GetState();
+            mouseState = Mouse.GetState();
+            gamepadState = GamePad.GetState(PlayerIndex.One);
+
+            // If the player pressed one of the arrow keys or is using a gamepad to aim, we want to disable mouse aiming. Otherwise,
+            // if the player moves the mouse, enable mouse aiming.
+            if (new[] { Keys.Left, Keys.Right, Keys.Up, Keys.Down }.Any(x => keyboardState.IsKeyDown(x)) || gamepadState.ThumbSticks.Right != Vector2.Zero)
+                isAimingWithMouse = false;
+            else if (MousePosition != new Vector2(lastMouseState.X, lastMouseState.Y))
+                isAimingWithMouse = true;
         }
     }
 }

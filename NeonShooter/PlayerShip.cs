@@ -28,6 +28,8 @@ namespace NeonShooter {
             Radius = 10;
         }
 
+        // UPDATE & DRAW
+
         public override void Update() {
             var aim = Input.GetAimDirection();
             if (aim.LengthSquared() > 0 && cooldownRemaining <= 0) {
@@ -55,8 +57,6 @@ namespace NeonShooter {
 
             if (Velocity.LengthSquared() > 0)
                 Orientation = Velocity.ToAngle();
-
-            
         }
     }
 }
