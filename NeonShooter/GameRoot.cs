@@ -12,6 +12,7 @@ namespace NeonShooter {
         public static GameRoot Instance { get; private set; }
         public static Viewport Viewport { get { return Instance.GraphicsDevice.Viewport; } }
         public static Vector2 ScreenSize { get { return new Vector2(Viewport.Width, Viewport.Height); } }
+        public static GameTime GameTime { get; private set; }
 
         public GameRoot() {
             Instance = this;
@@ -39,7 +40,15 @@ namespace NeonShooter {
             // TODO: Unload any non ContentManager content here
         }
 
+        private void DrawRightAlignedString(string text, float y) {
+            var textWidth = Art.Font.MeasureString(text).X;
+            spriteBatch.DrawString(Art.Font, text, new Vector2(ScreenSize.X - textWidth - 5, y), Color.White);
+        }
+
+        // UPDATE & DRAW
+
         protected override void Update(GameTime gameTime) {
+            GameTime = gameTime;
             Input.Update();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -47,6 +56,7 @@ namespace NeonShooter {
 
             EntityManager.Update();
             EnemySpawner.Update();
+            PlayerStatus.Update();
 
             base.Update(gameTime);
         }
@@ -56,6 +66,14 @@ namespace NeonShooter {
 
             spriteBatch.Begin(SpriteSortMode.Texture, BlendState.Additive);
             EntityManager.Draw(spriteBatch);
+            spriteBatch.End();
+
+            // Draw user interface
+            spriteBatch.Begin(0, BlendState.Additive);
+
+            spriteBatch.DrawString(Art.Font, "Lives: " + PlayerStatus.Lives, new Vector2(5), Color.White);
+            DrawRightAlignedString("Score: " + PlayerStatus.Score, 5);
+            DrawRightAlignedString("Multiplier: " + PlayerStatus.Multiplier, 35);
 
             // draw the custom mouse cursor
             spriteBatch.Draw(Art.Pointer, Input.MousePosition, Color.White);

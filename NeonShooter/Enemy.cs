@@ -13,6 +13,7 @@ namespace NeonShooter {
         private List<IEnumerator<int>> behaviours = new List<IEnumerator<int>>();
         private int timeUntilStart = 60;
         public bool IsActive { get { return timeUntilStart <= 0; } }
+        public int PointValue { get; private set; }
 
         public Enemy(Texture2D image, Vector2 position) {
             this.image = image;
@@ -23,6 +24,7 @@ namespace NeonShooter {
 
         public static Enemy CreateSeeker(Vector2 position) {
             var enemy = new Enemy(Art.Seeker, position);
+            enemy.PointValue = 2;
             enemy.AddBehaviour(enemy.FollowPlayer());
 
             return enemy;
@@ -30,12 +32,15 @@ namespace NeonShooter {
 
         public static Enemy CreateWanderer(Vector2 position) {
             var enemy = new Enemy(Art.Wanderer, position);
+            enemy.PointValue = 1;
             enemy.AddBehaviour(enemy.MoveRandomly());
             return enemy;
         }
 
         public void WasShot() {
             IsExpired = true;
+            PlayerStatus.AddPoints(PointValue);
+            PlayerStatus.IncreaseMultiplier();
         }
 
         private void AddBehaviour(IEnumerable<int> behaviour) {

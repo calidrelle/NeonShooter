@@ -34,6 +34,7 @@ namespace NeonShooter {
 
         public void Kill() {
             framesUntilRespawn = 60;
+            PlayerStatus.RemoveLife();
             EnemySpawner.Reset();
         }
 
@@ -41,7 +42,12 @@ namespace NeonShooter {
 
         public override void Update() {
             if (IsDead) {
-                framesUntilRespawn--;
+                if (--framesUntilRespawn == 0) {
+                    if (PlayerStatus.Lives == 0) {
+                        PlayerStatus.Reset();
+                        Position = GameRoot.ScreenSize / 2;
+                    }
+                }
                 return;
             }
 
