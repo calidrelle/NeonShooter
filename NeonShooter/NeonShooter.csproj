@@ -41,7 +41,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
+    <Compile Include="Art.cs" />
+    <Compile Include="Bullet.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="EntityManager.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="GameRoot.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="MathUtil.cs" />
+    <Compile Include="PlayerShip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
